@@ -1,10 +1,10 @@
-# GivingTuesday docs
+# GivingTuesday handbook
 
-A static [Astro](https://astro.build) site of internal articles. Cloudflare Pages hosts it and Cloudflare Access limits it to `@givingtuesday.org` email addresses.
+A static handbook built with [Astro Starlight](https://starlight.astro.build). It has a section sidebar, a table of contents on each page, and full-text search. Cloudflare Pages hosts it and Cloudflare Access limits it to `@givingtuesday.org` email addresses.
 
 ## Write an article
 
-Add a Markdown file to `src/content/articles/`. Subdirectories are allowed.
+Add a Markdown file to `src/content/articles/`. Each subdirectory becomes a collapsible section in the sidebar, labeled with the directory name. `src/content/articles/index.md` is the home page.
 
 ```markdown
 ---
@@ -17,12 +17,12 @@ slug: grant-checklist
 Article body in Markdown.
 ```
 
-All frontmatter fields are optional:
+All frontmatter fields are optional. Starlight fields such as `description` and `sidebar` also work. See the [frontmatter reference](https://starlight.astro.build/reference/frontmatter/).
 
 | Field   | Default when omitted                                                  |
 | ------- | --------------------------------------------------------------------- |
-| `title` | The last segment of the slug                                          |
-| `date`  | None. Undated articles sort after dated ones                          |
+| `title` | The last segment of the slug, capitalized                             |
+| `date`  | None                                                                  |
 | `tags`  | `[]`                                                                  |
 | `slug`  | The file path, lowercased and hyphenated, without `articles/` or `.md` |
 
@@ -30,7 +30,7 @@ For example, `src/content/articles/guides/Some File.md` publishes at `/guides/so
 
 ## Add external docs
 
-External repositories are read-only sources mounted as git submodules under `src/content/external/`. Their Markdown files publish under `/external/<name>/`.
+External repositories are read-only sources mounted as git submodules under `src/content/external/`. Their Markdown files publish under `/external/<name>/` and appear in the **External docs** sidebar group. They have no **Edit page** link.
 
 ```sh
 git submodule add https://github.com/<owner>/<repo>.git src/content/external/<repo>
