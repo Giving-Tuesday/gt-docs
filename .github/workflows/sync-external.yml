@@ -1,0 +1,27 @@
+name: Sync external docs
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+      - run: npm run sync
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          branch: sync-external-docs
+          delete-branch: true
+          commit-message: Update external docs
+          title: Update external docs
+          body: Markdown copied from the sources in `external-sources.json` by `npm run sync`. Review the Cloudflare Pages preview, then merge to publish.

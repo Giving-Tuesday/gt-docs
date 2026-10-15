@@ -29,7 +29,7 @@ const docs = defineCollection({
   loader: withDefaults(
     glob({
       base: './src/content',
-      pattern: ['articles/**/*.md', 'external/**/*.md', '!**/node_modules/**'],
+      pattern: ['articles/**/*.md', 'external/**/*.md'],
       generateId: ({ entry, data }) => (data.slug ? String(data.slug) : slugFromPath(entry)),
     }),
   ),
