@@ -2,6 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob, type Loader } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { docsSchema } from '@astrojs/starlight/schema';
+import { lastCommitDate } from './lib/git';
 import { slugFromPath, titleFromSlug } from './lib/slug';
 
 function withDefaults(loader: Loader): Loader {
@@ -15,6 +16,7 @@ function withDefaults(loader: Loader): Loader {
             ...entry,
             data: {
               title: titleFromSlug(entry.id),
+              lastUpdated: entry.filePath ? lastCommitDate(entry.filePath) : undefined,
               ...(entry.id.startsWith('external/') && { editUrl: false }),
               ...entry.data,
             },

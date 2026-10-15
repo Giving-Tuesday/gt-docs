@@ -7,7 +7,6 @@ export default defineConfig({
     starlight({
       title: 'GivingTuesday Handbook',
       favicon: '/favicon.svg',
-      lastUpdated: true,
       editLink: { baseUrl: 'https://github.com/Giving-Tuesday/gt-docs/edit/main/' },
       sidebar: [
         { autogenerate: { directory: 'src/content/articles' } },
