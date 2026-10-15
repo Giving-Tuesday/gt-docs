@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "name": "embed-app",
+    "repo": "https://github.com/Giving-Tuesday/embed-app.git",
+    "ref": "release-1.x",
+    "path": "docs"
+  }
+]
