@@ -37,7 +37,9 @@ git submodule add https://github.com/<owner>/<repo>.git src/content/external/<re
 git commit -m "Add <repo> docs"
 ```
 
-To pull the latest content from every source:
+Dependabot checks every submodule daily, as configured in `.github/dependabot.yml`. When any upstream branch has new commits, it opens one pull request that updates all changed submodules. Cloudflare Pages builds a preview of that pull request. Review the preview, then merge to publish. Dependabot can read private submodules only if it has access to those repositories.
+
+To pull the latest content by hand:
 
 ```sh
 git submodule update --remote
