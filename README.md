@@ -48,7 +48,7 @@ Cloudflare Pages clones only public submodules. Relative links between Markdown 
 
 ## Develop locally
 
-Use Node.js 22.12 or later.
+Use Node.js 24 or later. The `.node-version` file sets the exact version.
 
 ```sh
 git clone --recurse-submodules <this repo>
