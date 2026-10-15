@@ -1,0 +1,71 @@
+---
+interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>{title} · GivingTuesday Docs</title>
+  </head>
+  <body>
+    <header>
+      <a href="/">GivingTuesday Docs</a>
+      <a href="/tags/">Tags</a>
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
+<style is:global>
+  :root {
+    color-scheme: light dark;
+    --text: #1a1a1a;
+    --muted: #666;
+    --bg: #fff;
+    --accent: #16a34a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --text: #e6e6e6;
+      --muted: #999;
+      --bg: #111;
+      --accent: #4ade80;
+    }
+  }
+  body {
+    margin: 0 auto;
+    max-width: 46rem;
+    padding: 1rem;
+    font-family: system-ui, sans-serif;
+    line-height: 1.6;
+    color: var(--text);
+    background: var(--bg);
+  }
+  header {
+    display: flex;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--muted);
+  }
+  a {
+    color: var(--accent);
+  }
+  pre {
+    overflow-x: auto;
+    padding: 0.75rem;
+  }
+  img {
+    max-width: 100%;
+  }
+  .meta {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+</style>

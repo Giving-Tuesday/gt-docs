@@ -1,55 +1,65 @@
-# Mintlify Starter Kit
+# GivingTuesday docs
 
-Use the starter kit to get your docs deployed and ready to customize.
+A static [Astro](https://astro.build) site of internal articles. Cloudflare Pages hosts it and Cloudflare Access limits it to `@givingtuesday.org` email addresses.
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
+## Write an article
 
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
+Add a Markdown file to `src/content/articles/`. Subdirectories are allowed.
 
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
+```markdown
+---
+title: Grant reporting checklist
+date: 2026-10-15
+tags: [grants, process]
+slug: grant-checklist
+---
 
-## AI-assisted writing
-
-Set up your AI coding tool to work with Mintlify:
-
-```bash
-npx skills add https://mintlify.com/docs
+Article body in Markdown.
 ```
 
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
+All frontmatter fields are optional:
 
-See the [AI tools guides](/ai-tools) for tool-specific setup.
+| Field   | Default when omitted                                                  |
+| ------- | --------------------------------------------------------------------- |
+| `title` | The last segment of the slug                                          |
+| `date`  | None. Undated articles sort after dated ones                          |
+| `tags`  | `[]`                                                                  |
+| `slug`  | The file path, lowercased and hyphenated, without `articles/` or `.md` |
 
-## Development
+For example, `src/content/articles/guides/Some File.md` publishes at `/guides/some-file/`. A file named `index.md` or `README.md` takes the slug of its directory.
 
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
+## Add external docs
 
+External repositories are read-only sources mounted as git submodules under `src/content/external/`. Their Markdown files publish under `/external/<name>/`.
+
+```sh
+git submodule add https://github.com/<owner>/<repo>.git src/content/external/<repo>
+git commit -m "Add <repo> docs"
 ```
-npm i -g mint
+
+To pull the latest content from every source:
+
+```sh
+git submodule update --remote
+git commit -am "Update external docs"
 ```
 
-Run the following command at the root of your documentation, where your `docs.json` is located:
+Cloudflare Pages clones only public submodules. Relative links between Markdown files in an external repo, such as `[setup](docs/setup.md)`, are not rewritten and can 404.
 
+## Develop locally
+
+Use Node.js 22.12 or later.
+
+```sh
+git clone --recurse-submodules <this repo>
+npm install
+npm run dev
 ```
-mint dev
-```
 
-View your local preview at `http://localhost:3000`.
+`npm run build` writes the static site to `dist/`.
 
-## Publishing changes
+## Deploy
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+A push to `main` triggers a Cloudflare Pages build. The build makes no network calls. All content comes from this repository and its submodules.
 
-## Need help?
-
-### Troubleshooting
-
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
-
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+For the one-time Cloudflare setup (DNS, Pages project, custom domain, and Access), see [`docs/cloudflare-setup.md`](docs/cloudflare-setup.md).
